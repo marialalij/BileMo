@@ -13,15 +13,8 @@
 
 {% block body %}
 	<div class="row row-button">
-		{% if type is defined and type == 'done' %}
-			<a href="" class="btn btn-info pull-right">Consulter la liste des tâches à faire</a>
-		{% else %}
-			<a href="" class="btn btn-secondary pull-right">Consulter la liste des tâches terminées</a>
-		{% endif %}
-
 		<a href="{{ path('task_create') }}" class="btn btn-info pull-right btn-create">Créer une tâche</a>
 	</div>
-
 	<div class="row">
 		{% for task in tasks %}
 			<div class="col-sm-4 col-lg-4 col-md-4 task-card">
@@ -53,7 +46,7 @@
 							</button>
 						</form>
 						<form action="{{ path('task_delete', {'id' : task.id }) }}">
-							<button class="btn btn-danger btn-sm pull-right" {% if not is_granted('TASK_DELETE', task) %} disabled {% endif %}>Supprimer</button>
+							<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
 						</form>
 					</div>
 				</div>

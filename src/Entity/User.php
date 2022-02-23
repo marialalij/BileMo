@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table("user")
  * @ORM\Entity
- * @UniqueEntity("email")
- * @UniqueEntity("username")
+ * @UniqueEntity(fields={"username"}, message="Ce nom d'utilisateur est déjà utilisé !")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé !")
  */
 class User implements UserInterface
 {
@@ -27,15 +27,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
-     * @Assert\NotNull(message="Le champ nom d'utilisateur ne peut être null.")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(groups={"registration"})
-     * @Assert\Length(min="6", max="30", groups={"registration"})
-     * @Assert\NotNull(message="Le champ mot de passe ne peut être null.", groups={"registration"})
      */
     private $password;
 
@@ -43,7 +39,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
-     * @Assert\NotNull(message="Le champ email ne peut être null.")
      */
     private $email;
 

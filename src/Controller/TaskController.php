@@ -22,7 +22,6 @@ class TaskController extends AbstractController
     }
 
 
-
     /**
      * @Route("/tasks/create", name="task_create")
      */

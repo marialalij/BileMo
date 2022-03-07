@@ -70,4 +70,24 @@ class TaskControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
         $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
     }
+
+    public function testDeletionOfATaskFromAnotherUser()
+    {
+        $client = static::createClient();
+        $userRepository = static::$container->get(UserRepository::class);
+
+        $user = $userRepository->findOneByUsername('user');
+
+        $client->loginUser($user);
+
+        $admin = $userRepository->findOneByUsername('admin');
+
+        $taskRepository = static::$container->get(TaskRepository::class);
+
+        $task = $taskRepository->findOneByAuthor($admin);
+
+        $crawler  = $client->request('GET', '/tasks/'  .  $task->getid() . '/delete');
+        $crawler  = $client->followRedirect();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

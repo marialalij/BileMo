@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use App\Manager\TaskManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -83,16 +84,36 @@ class TaskController extends AbstractController
     }
 
     /**
+     * Manage task deletion restricted to task author or admin for anonymous tasks.
+     *
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
     public function deleteTaskAction(Task $task)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+    { {
+            if ($task->getAuthor() === $this->getUser()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($task);
+                $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+                $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+                return $this->redirectToRoute('task_list');
+            }
+
+            if ($task->getAuthor() == null) {
+                $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($task);
+                $em->flush();
+
+                $this->addFlash('success', 'La tâche a bien été supprimée.');
+
+                return $this->redirectToRoute('task_list');
+            }
+
+            $this->addFlash('error', 'Impossible de supprimer une tâche qui ne vous appartient pas !');
+            return $this->redirectToRoute('task_list');
+        }
     }
 }

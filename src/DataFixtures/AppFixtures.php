@@ -8,6 +8,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
+
 class AppFixtures extends Fixture
 {
     private $encoder;
@@ -16,6 +20,8 @@ class AppFixtures extends Fixture
     {
         $this->encoder = $encoder;
     }
+
+
 
     public function load(ObjectManager $manager)
     {

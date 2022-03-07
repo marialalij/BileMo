@@ -46,15 +46,24 @@
 							</button>
 						</form>
 						<form action="{{ path('task_delete', {'id' : task.id }) }}">
-							<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
-						</form>
+							{% if task.author %}
+								{% if task.author == app.user %}
+									<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+								{% endif %}
+							{% endif %}
+							{% for role in app.user.roles %}
+								{% if role == "ROLE_ADMIN" and task.author == null %}
+									<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+								{% endif %}
+							{% endfor %}
+
+						</div>
 					</div>
 				</div>
-			</div>
-		{% else %}
-			<div class="alert alert-warning" role="alert">
-				Il n'y a pas encore de tâche enregistrée.
-			</div>
-		{% endfor %}
-	</div>
-{% endblock %}
+			{% else %}
+				<div class="alert alert-warning" role="alert">
+					Il n'y a pas encore de tâche enregistrée.
+				</div>
+			{% endfor %}
+		</div>
+	{% endblock %}

@@ -4,19 +4,12 @@ namespace App\Tests;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends WebTestCase
 {
-
-    public function testUsersPage()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('a', 'To Do List app');
-    }
 
     public function testCreateUser()
     {
@@ -29,10 +22,10 @@ class UserControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/users/create');
 
         $form = $crawler->selectButton('Ajouter')->form();
-        $form['user[username]'] = 'mariaa8';
-        $form['user[password][first]'] = 'anjn';
-        $form['user[password][second]'] = 'anjn';
-        $form['user[email]'] = 'kdkdk@email.com';
+        $form['user[username]'] = 'jdzij';
+        $form['user[password][first]'] = 'all';
+        $form['user[password][second]'] = 'all';
+        $form['user[email]'] = 'zhid@email.com';
         $crawler = $client->submit($form);
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }

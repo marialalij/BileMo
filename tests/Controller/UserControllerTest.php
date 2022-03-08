@@ -52,7 +52,6 @@ class UserControllerTest extends WebTestCase
         $userRepository = static::$container->get(UserRepository::class);
         $user = $userRepository->findOneByUsername('admin');
         $client->loginUser($user);
-        $crawler = $client->request('GET', '/users');
         $this->assertSelectorTextSame('h1', 'Liste des utilisateurs');
     }
 }

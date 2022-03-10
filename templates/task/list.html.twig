@@ -56,14 +56,14 @@
 									<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
 								{% endif %}
 							{% endfor %}
-
-						</div>
+						</form>
 					</div>
 				</div>
-			{% else %}
-				<div class="alert alert-warning" role="alert">
-					Il n'y a pas encore de tâche enregistrée.
-				</div>
-			{% endfor %}
-		</div>
-	{% endblock %}
+			</div>
+		{% else %}
+			<div class="alert alert-warning" role="alert">
+				Il n'y a pas encore de tâche enregistrée.
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
